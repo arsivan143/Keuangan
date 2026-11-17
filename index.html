@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Keuangan Bulanan</title>
+  <meta name="description" content="Catat dan pantau pemasukan dan pengeluaran bulanan langsung dari HP.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Keuangan">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Layar masuk: alamat server dan kode akses -->
+  <section id="layarMasuk" class="layar-masuk" hidden>
+    <form id="formMasuk" class="kartu-masuk" autocomplete="off">
+      <div class="logo" aria-hidden="true"></div>
+      <h1>Keuangan Bulanan</h1>
+      <p class="bantu">Masukkan alamat server dan kode akses. Cukup sekali di perangkat ini.</p>
+      <label class="field"><span>Alamat server (URL Web App)</span>
+        <input id="mUrl" type="url" inputmode="url" autocapitalize="off" spellcheck="false" placeholder="https://script.google.com/macros/s/.../exec" required>
+      </label>
+      <label class="field"><span>Kode akses</span>
+        <input id="mKode" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+      </label>
+      <p id="mGalat" class="galat" role="alert" hidden></p>
+      <button id="mMasuk" class="tombol utama" type="submit">Masuk</button>
+    </form>
+  </section>
+
+  <!-- Aplikasi -->
+  <div id="aplikasi" hidden>
+    <header class="topbar glass">
+      <div class="topbar-baris">
+        <h1 id="judulHalaman">Beranda</h1>
+        <button id="btnMuat" class="ikon-tombol" type="button" data-aksi="muat" aria-label="Muat ulang data">↻</button>
+      </div>
+      <div id="bulanNav" class="bulan-nav">
+        <button type="button" class="ikon-tombol" data-aksi="bulan" data-arah="-1" aria-label="Bulan sebelumnya">‹</button>
+        <label class="bulan-pilih"><span class="sr">Pilih bulan</span><input id="bulanInput" type="month"></label>
+        <button type="button" class="ikon-tombol" data-aksi="bulan" data-arah="1" aria-label="Bulan berikutnya">›</button>
+      </div>
+    </header>
+
+    <div id="banner" class="banner" role="status" hidden></div>
+    <main id="konten" tabindex="-1"></main>
+
+    <button id="fab" class="fab" type="button" data-aksi="tambah">+ Tambah Transaksi</button>
+
+    <nav class="bottomnav glass" aria-label="Navigasi utama">
+      <button type="button" data-aksi="nav" data-hal="beranda" class="aktif" aria-current="page">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Beranda</span>
+      </button>
+      <button type="button" data-aksi="nav" data-hal="analisis">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Analisis</span>
+      </button>
+      <button type="button" data-aksi="nav" data-hal="riwayat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span>Riwayat</span>
+      </button>
+      <button type="button" data-aksi="nav" data-hal="anggaran">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2z"/><circle cx="16.5" cy="14.5" r="1"/></svg><span>Anggaran</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Lembar bawah: form transaksi dan konfirmasi hapus -->
+  <div id="lembar" class="lembar" hidden>
+    <div class="lembar-latar" data-aksi="tutup"></div>
+    <div class="lembar-isi" role="dialog" aria-modal="true" aria-labelledby="lembarJudul">
+      <div id="lembarKonten"></div>
+    </div>
+  </div>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
